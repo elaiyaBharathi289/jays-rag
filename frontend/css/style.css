@@ -1,0 +1,527 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f9fb;
+    color: #212529;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 20%;
+    min-width: 210px;
+    background: #fff;
+    border-right: 1px solid #e5e7eb;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================
+   TECHJAYS / JAYS RAG LOGO
+========================= */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.techjays-logo {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    display: block;
+}
+
+.logo span {
+    white-space: nowrap;
+}
+
+
+/* Old logo icon support */
+
+.logo-icon,
+.assistant-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #212529;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================
+   NEW CHAT
+========================= */
+
+.new-chat-btn {
+    width: 100%;
+    background: #212529;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   SIDEBAR MENU
+========================= */
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.menu-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 12px;
+    text-decoration: none;
+    color: #6b7280;
+    border-radius: 8px;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background: #f0f1f3;
+    color: #212529;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+
+/* =========================
+   DOCUMENT AREA
+========================= */
+
+.document-area {
+    width: 40%;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.topbar {
+    margin-bottom: 25px;
+}
+
+.topbar h4 {
+    margin: 0;
+    font-weight: 700;
+}
+
+.topbar p,
+.upload-header p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+
+/* =========================
+   UPLOAD SECTION
+========================= */
+
+.upload-section {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 25px;
+}
+
+.upload-box {
+    border: 2px dashed #d1d5db;
+    border-radius: 10px;
+    padding: 35px;
+    text-align: center;
+}
+
+.upload-box.dragging {
+    border-color: #212529;
+    background: #f3f4f6;
+}
+
+.upload-icon {
+    font-size: 35px;
+}
+
+.upload-box p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.browse-btn {
+    background: #212529;
+    color: #fff;
+}
+
+.upload-box small {
+    display: block;
+    color: #9ca3af;
+    margin-top: 8px;
+}
+
+
+/* =========================
+   DOCUMENTS
+========================= */
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.document-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.document-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px;
+}
+
+.file-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.file-icon.pdf {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.file-icon.doc {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.document-info {
+    flex: 1;
+}
+
+.document-info h6 {
+    margin: 0;
+    font-size: 14px;
+}
+
+.document-info span {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.document-status {
+    font-size: 12px;
+}
+
+.indexed {
+    color: #198754;
+}
+
+.processing {
+    color: #d97706;
+}
+
+.delete-btn {
+    border: 0;
+    background: transparent;
+    color: #9ca3af;
+}
+
+
+/* =========================
+   CHAT / OUTPUT AREA
+========================= */
+
+.chat-area {
+    width: 40%;
+    background: #fff;
+    border-left: 1px solid #e5e7eb;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.chat-header {
+    padding: 18px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.assistant-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.assistant-info h6 {
+    margin: 0;
+}
+
+.rag-status {
+    font-size: 11px;
+    color: #198754;
+}
+
+.rag-status span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #198754;
+    border-radius: 50%;
+}
+
+
+/* =========================
+   OUTPUT MESSAGES
+========================= */
+
+.chat-messages {
+    flex: 1;
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding: 25px;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.assistant-message {
+    gap: 8px;
+}
+
+.message-avatar {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #212529;
+    color: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message-content {
+    max-width: 95%;
+}
+
+.message-content p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.user-message {
+    justify-content: flex-end;
+}
+
+.user-message .message-content {
+    background: #f0f1f3;
+    padding: 10px 14px;
+    border-radius: 12px;
+}
+
+
+/* =========================
+   SOURCES
+========================= */
+
+.sources {
+    margin-top: 12px;
+    padding: 10px;
+    background: #f8f9fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.sources-title {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.source-item {
+    display: flex;
+    gap: 8px;
+    padding: 6px 0;
+    font-size: 12px;
+}
+
+.source-item span {
+    display: flex;
+    flex-direction: column;
+}
+
+.source-item small {
+    color: #9ca3af;
+}
+
+
+/* =========================
+   CHAT INPUT
+========================= */
+
+.chat-input-area {
+    padding: 15px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.chat-input-box {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.chat-input-box textarea {
+    flex: 1;
+    resize: none;
+    border: 0;
+    outline: 0;
+}
+
+.send-btn {
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 8px;
+    background: #212529;
+    color: #fff;
+}
+
+.chat-input-area small {
+    display: block;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 10px;
+    margin-top: 8px;
+}
+
+
+/* =========================
+   EMPTY DOCUMENTS
+========================= */
+
+.empty-documents {
+    border: 1px dashed #d1d5db;
+    border-radius: 10px;
+    padding: 35px;
+    text-align: center;
+    color: #9ca3af;
+}
+
+.empty-documents i {
+    font-size: 30px;
+}
+
+.empty-documents p {
+    margin: 8px 0 0;
+    font-size: 14px;
+}
+
+
+/* =========================
+   CACHE BADGE
+========================= */
+
+.cache-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-size: 10px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+
+    .sidebar {
+        width: 18%;
+        min-width: 70px;
+    }
+
+    .document-area {
+        width: 42%;
+        padding: 20px;
+    }
+
+    .chat-area {
+        width: 40%;
+    }
+}
+
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar span,
+    .new-chat-btn,
+    .logo span {
+        display: none;
+    }
+
+    .menu-item {
+        justify-content: center;
+    }
+
+    .document-area {
+        width: 100%;
+    }
+
+    .chat-area {
+        display: none;
+    }
+}

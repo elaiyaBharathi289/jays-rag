@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    
+    <link rel="icon" href="assests/techjays-logo.png">
+    <title>Jays</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="css/style.css"
+    />
+  </head>
+
+  <body>
+
+    <div class="app-container">
+
+      <!-- =====================================================
+           SIDEBAR
+           ===================================================== -->
+
+      <aside class="sidebar">
+
+        <div class="logo">
+    <img
+        src="assests/techjays-logo.png"
+        alt="Techjays"
+        class="techjays-logo"
+    >
+
+    <span>Jays RAG</span>
+</div>
+
+        <button
+          type="button"
+          class="btn new-chat-btn"
+        >
+          <i class="bi bi-plus-lg"></i>
+          New Chat
+        </button>
+
+        <nav class="sidebar-menu">
+
+          <a
+            class="menu-item active"
+            href="#"
+          >
+            <i class="bi bi-house"></i>
+            <span>Home</span>
+          </a>
+
+          <a
+            class="menu-item"
+            href="#"
+          >
+            <i class="bi bi-files"></i>
+            <span>Documents</span>
+          </a>
+
+          <a
+            class="menu-item"
+            href="#"
+          >
+            <i class="bi bi-chat-left-text"></i>
+            <span>Chats</span>
+          </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+          <a
+            class="menu-item"
+            href="#"
+          >
+            <i class="bi bi-gear"></i>
+            <span>Settings</span>
+          </a>
+
+        </div>
+
+      </aside>
+
+
+      <!-- =====================================================
+           DOCUMENT AREA
+           ===================================================== -->
+
+      <main class="document-area">
+
+        <div class="topbar">
+
+          <div>
+
+            <h4>My Documents</h4>
+
+            <p>
+              Upload documents and ask questions about them.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- ===================================================
+             UPLOAD
+             =================================================== -->
+
+        <section class="upload-section">
+
+          <div class="upload-header">
+
+            <h5>Upload Documents</h5>
+
+            <p>
+              Add PDF, DOCX or TXT files to your knowledge base.
+            </p>
+
+          </div>
+
+
+          <div
+            class="upload-box"
+            id="uploadBox"
+          >
+
+            <div class="upload-icon">
+              <i class="bi bi-cloud-arrow-up"></i>
+            </div>
+
+            <h6>
+              Drag & Drop your files here
+            </h6>
+
+            <p>
+              or click below to browse your computer
+            </p>
+
+            <input
+              type="file"
+              id="fileInput"
+              hidden
+              multiple
+              accept=".pdf,.docx,.txt"
+            />
+
+            <button
+              type="button"
+              class="btn browse-btn"
+              id="browseBtn"
+            >
+              <i class="bi bi-folder2-open"></i>
+              Browse Files
+            </button>
+
+            <small>
+              Supported: PDF, DOCX, TXT
+            </small>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================
+             DOCUMENT LIST
+             =================================================== -->
+
+        <section class="documents-section">
+
+          <div class="section-title">
+
+            <h5>Your Documents</h5>
+
+            <span class="document-count">
+              0 documents
+            </span>
+
+          </div>
+
+
+          <div
+            class="document-list"
+            id="documentList"
+          >
+
+            <div class="empty-documents">
+
+              <i class="bi bi-folder2-open"></i>
+
+              <p>
+                No documents uploaded yet.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
+
+      <!-- =====================================================
+           CHAT AREA
+           ===================================================== -->
+
+      <aside class="chat-area">
+
+        <!-- CHAT HEADER -->
+
+        <div class="chat-header">
+
+          <div class="assistant-info">
+
+            <div class="assistant-icon">
+              <i class="bi bi-stars"></i>
+            </div>
+
+            <div>
+
+              <h6>Jays</h6>
+
+              <span class="rag-status">
+                <span></span>
+                RAG Active
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- CHAT MESSAGES -->
+
+        <div
+          class="chat-messages"
+          id="chatMessages"
+        >
+
+          <div class="message assistant-message">
+
+            <div class="message-avatar">
+              <i class="bi bi-stars"></i>
+            </div>
+
+            <div class="message-content">
+
+              <p>
+                Hello! Upload a document and ask me anything about it.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- CHAT INPUT -->
+
+        <div class="chat-input-area">
+
+          <!--
+            No form is used here.
+            This prevents the browser from reloading
+            index.html when the Send button is clicked.
+          -->
+
+          <div id="chatForm">
+
+            <div class="chat-input-box">
+
+              <textarea
+                id="questionInput"
+                rows="1"
+                placeholder="Ask a question about your documents..."
+              ></textarea>
+
+              <button
+                type="button"
+                id="sendBtn"
+                class="send-btn"
+              >
+                <i class="bi bi-arrow-up"></i>
+              </button>
+
+            </div>
+
+          </div>
+
+          <small>
+            Answers are grounded in uploaded documents.
+          </small>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="js/app.js"></script>
+
+  </body>
+</html>
