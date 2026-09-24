@@ -12,8 +12,12 @@ def get_local_embedder():
 
     return HuggingFaceEmbeddings(
         model_name=settings.local_embedding_model,
-        model_kwargs={"device": "cpu"},
-        encode_kwargs={"normalize_embeddings": True},
+        model_kwargs={
+            "device": "cpu",
+        },
+        encode_kwargs={
+            "normalize_embeddings": True,
+        },
     )
 
 
@@ -43,8 +47,10 @@ async def embed_documents(
 
         print(
             f"Embedding batch: "
-            f"{start + 1}-{min(start + batch_size, len(texts))} "
-            f"of {len(texts)} chunks"
+            f"{start + 1}-"
+            f"{min(start + batch_size, len(texts))} "
+            f"of {len(texts)} chunks",
+            flush=True,
         )
 
         embeddings = await asyncio.to_thread(
@@ -57,7 +63,9 @@ async def embed_documents(
     return all_embeddings
 
 
-async def embed_query(text: str) -> list[float]:
+async def embed_query(
+    text: str,
+) -> list[float]:
 
     embedder = get_local_embedder()
 
