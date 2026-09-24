@@ -114,11 +114,21 @@ async def upload_document(
 
                 out.write(chunk)
 
+        print(
+            f"[UPLOAD] File saved: {file_path}",
+            flush=True,
+        )
+
         # -----------------------------------------------------
         # 5. Calculate SHA-256
         # -----------------------------------------------------
 
         digest = sha256_file(file_path)
+
+        print(
+            f"[UPLOAD] SHA-256 calculated: {digest}",
+            flush=True,
+        )
 
         # -----------------------------------------------------
         # 6. Create / update document record
@@ -132,6 +142,13 @@ async def upload_document(
             file_path=file_path,
         )
 
+        print(
+            f"[UPLOAD] Document record created: "
+            f"{record['id']}, "
+            f"duplicate={duplicate}",
+            flush=True,
+        )
+
         # -----------------------------------------------------
         # 7. Existing non-failed document
         # -----------------------------------------------------
@@ -140,6 +157,12 @@ async def upload_document(
 
             file_path.unlink(
                 missing_ok=True
+            )
+
+            print(
+                f"[UPLOAD] Duplicate document: "
+                f"{record['id']}",
+                flush=True,
             )
 
             return UploadResponse(
@@ -152,12 +175,24 @@ async def upload_document(
 
         # -----------------------------------------------------
         # 8. Start ingestion in background
-        # ---------------------------------------------------------
+        # -----------------------------------------------------
+
+        print(
+            f"[UPLOAD] Starting background task "
+            f"for document {record['id']}",
+            flush=True,
+        )
 
         background_tasks.add_task(
             process_document,
             record["id"],
             file_path,
+        )
+
+        print(
+            f"[UPLOAD] Background task registered "
+            f"for document {record['id']}",
+            flush=True,
         )
 
         # -----------------------------------------------------

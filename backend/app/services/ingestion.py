@@ -185,6 +185,21 @@ async def process_document(
     Indexed
     """
 
+    # ---------------------------------------------------------
+    # DIAGNOSTIC: confirm background task actually starts
+    # ---------------------------------------------------------
+
+    print(
+        f"[INGESTION] process_document STARTED "
+        f"document_id={document_id}",
+        flush=True,
+    )
+
+    print(
+        f"[INGESTION] file_path={path}",
+        flush=True,
+    )
+
     db = await connect()
 
     try:
@@ -193,10 +208,16 @@ async def process_document(
         # 1. Mark document as processing
         # ---------------------------------------------------------
 
-        print("========================================")
-        print(f"Starting ingestion: {document_id}")
-        print(f"File: {path}")
-        print("========================================")
+        print("========================================", flush=True)
+        print(
+            f"Starting ingestion: {document_id}",
+            flush=True,
+        )
+        print(
+            f"File: {path}",
+            flush=True,
+        )
+        print("========================================", flush=True)
 
         await db.execute(
             """
@@ -214,17 +235,26 @@ async def process_document(
 
         await db.commit()
 
-        print("✅ Document status: processing")
+        print(
+            "✅ Document status: processing",
+            flush=True,
+        )
 
         # ---------------------------------------------------------
         # 2. Extract document
         # ---------------------------------------------------------
 
-        print("📄 Extracting document...")
+        print(
+            "📄 Extracting document...",
+            flush=True,
+        )
 
         pages = await extract_file(path)
 
-        print(f"✅ Extraction completed: {len(pages)} pages")
+        print(
+            f"✅ Extraction completed: {len(pages)} pages",
+            flush=True,
+        )
 
         if not pages or not any(
             x["text"].strip()
@@ -240,11 +270,17 @@ async def process_document(
         # 3. Build chunks
         # ---------------------------------------------------------
 
-        print("✂️ Building chunks...")
+        print(
+            "✂️ Building chunks...",
+            flush=True,
+        )
 
         chunks = await build_chunks(pages)
 
-        print(f"✅ Chunking completed: {len(chunks)} chunks")
+        print(
+            f"✅ Chunking completed: {len(chunks)} chunks",
+            flush=True,
+        )
 
         if not chunks:
             raise AppError(
@@ -257,7 +293,10 @@ async def process_document(
         # 4. Prepare Chroma IDs + metadata
         # ---------------------------------------------------------
 
-        print("🔧 Preparing Chroma data...")
+        print(
+            "🔧 Preparing Chroma data...",
+            flush=True,
+        )
 
         ids = [
             f"{document_id}:{c.index}"
@@ -281,13 +320,24 @@ async def process_document(
             for c, cid in zip(chunks, ids)
         ]
 
-        print("✅ Chroma data prepared")
+        print(
+            "✅ Chroma data prepared",
+            flush=True,
+        )
 
         # ---------------------------------------------------------
         # 5. Generate embeddings + store in Chroma
         # ---------------------------------------------------------
 
-        print("🧠 Starting embeddings + Chroma insertion...")
+        print(
+            "🧠 Starting embeddings + Chroma insertion...",
+            flush=True,
+        )
+
+        print(
+            f"[EMBEDDING] Number of chunks: {len(texts)}",
+            flush=True,
+        )
 
         await add_chunks(
             ids,
@@ -295,13 +345,19 @@ async def process_document(
             metadatas,
         )
 
-        print("✅ Chroma insertion completed")
+        print(
+            "✅ Chroma insertion completed",
+            flush=True,
+        )
 
         # ---------------------------------------------------------
         # 6. Store chunks in SQLite
         # ---------------------------------------------------------
 
-        print("💾 Starting SQLite chunk insertion...")
+        print(
+            "💾 Starting SQLite chunk insertion...",
+            flush=True,
+        )
 
         for c, cid in zip(chunks, ids):
 
@@ -349,13 +405,19 @@ async def process_document(
                 ),
             )
 
-        print("✅ SQLite chunks inserted")
+        print(
+            "✅ SQLite chunks inserted",
+            flush=True,
+        )
 
         # ---------------------------------------------------------
         # 7. Mark document as indexed
         # ---------------------------------------------------------
 
-        print("📝 Updating document status to indexed...")
+        print(
+            "📝 Updating document status to indexed...",
+            flush=True,
+        )
 
         await db.execute(
             """
@@ -374,11 +436,26 @@ async def process_document(
 
         await db.commit()
 
-        print("========================================")
-        print("🎉 DOCUMENT INDEXING COMPLETED")
-        print(f"Document ID: {document_id}")
-        print("Status: indexed")
-        print("========================================")
+        print(
+            "========================================",
+            flush=True,
+        )
+        print(
+            "🎉 DOCUMENT INDEXING COMPLETED",
+            flush=True,
+        )
+        print(
+            f"Document ID: {document_id}",
+            flush=True,
+        )
+        print(
+            "Status: indexed",
+            flush=True,
+        )
+        print(
+            "========================================",
+            flush=True,
+        )
 
     except Exception as exc:
 
@@ -386,8 +463,20 @@ async def process_document(
         # 8. Mark document as failed
         # ---------------------------------------------------------
 
-        print("❌ DOCUMENT INGESTION FAILED")
-        print(f"Error: {exc}")
+        print(
+            "❌ DOCUMENT INGESTION FAILED",
+            flush=True,
+        )
+
+        print(
+            f"Error type: {type(exc).__name__}",
+            flush=True,
+        )
+
+        print(
+            f"Error: {exc}",
+            flush=True,
+        )
 
         await db.execute(
             """
@@ -418,4 +507,7 @@ async def process_document(
 
         await db.close()
 
-        print("🔒 Database connection closed")
+        print(
+            "🔒 Database connection closed",
+            flush=True,
+        )
