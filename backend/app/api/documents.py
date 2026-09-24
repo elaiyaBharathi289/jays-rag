@@ -6,6 +6,7 @@ from fastapi import (
     APIRouter,
     UploadFile,
     File,
+    BackgroundTasks,
 )
 
 from app.core.config import get_settings
@@ -34,6 +35,7 @@ settings = get_settings()
     status_code=202,
 )
 async def upload_document(
+    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
 ):
     # ---------------------------------------------------------
@@ -149,35 +151,30 @@ async def upload_document(
             )
 
         # -----------------------------------------------------
-        # 8. Process document directly
-        #
-        # We intentionally await ingestion here instead of
-        # using FastAPI BackgroundTasks.
-        #
-        # This allows Render to keep the ingestion inside the
-        # request lifecycle and exposes any ingestion error
-        # directly in the server logs.
-        # -----------------------------------------------------
+        # 8. Start ingestion in background
+        # ---------------------------------------------------------
 
-        await process_document(
+        background_tasks.add_task(
+            process_document,
             record["id"],
             file_path,
         )
 
         # -----------------------------------------------------
-        # 9. Return successful indexing response
+        # 9. Return queued response
         # -----------------------------------------------------
 
         return UploadResponse(
             document_id=record["id"],
             filename=file.filename,
-            status="indexed",
-            message="Document uploaded and indexed successfully.",
+            status="queued",
+            message="Document accepted and ingestion started.",
         )
 
     except Exception:
 
-        # If upload/processing fails, remove the uploaded file.
+        # If the upload itself fails before the document
+        # is successfully registered, clean up the file.
 
         file_path.unlink(
             missing_ok=True
