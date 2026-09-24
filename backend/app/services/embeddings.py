@@ -31,7 +31,7 @@ def get_embedder():
 
 async def embed_documents(
     texts: list[str],
-    batch_size: int = 32,
+    batch_size: int = 8,
 ) -> list[list[float]]:
 
     embedder = get_local_embedder()
