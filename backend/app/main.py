@@ -54,9 +54,21 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 FRONTEND_DIR = BASE_DIR / "frontend"
 
 app.mount(
-    "/static",
-    StaticFiles(directory=FRONTEND_DIR),
-    name="static",
+    "/css",
+    StaticFiles(directory=FRONTEND_DIR / "css"),
+    name="css",
+)
+
+app.mount(
+    "/js",
+    StaticFiles(directory=FRONTEND_DIR / "js"),
+    name="js",
+)
+
+app.mount(
+    "/assests",
+    StaticFiles(directory=FRONTEND_DIR / "assests"),
+    name="assests",
 )
 
 
